@@ -40,6 +40,8 @@ export async function getWeatherByCity(city: string) {
     return {
         cityName: coords.name,
         country: coords.country,
+        lat: coords.lat,
+        lon: coords.lon,
         ...weather
     }
 }

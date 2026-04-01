@@ -11,7 +11,7 @@ export function WeatherIcon({ condition, size = 64, className = '' }: WeatherIco
 
     switch (condition.toLowerCase()) {
         case 'clear':
-            return <Sun {...iconProps} className={`${iconProps.className} text-yellow-300 animate-pulse`} />;
+            return <Sun {...iconProps} className={`${iconProps.className} text-yellow-300`} />;
         case 'clouds':
             return <Cloud {...iconProps} className={`${iconProps.className} text-gray-200`} />;
         case 'rain':
