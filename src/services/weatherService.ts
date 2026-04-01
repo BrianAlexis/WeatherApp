@@ -30,6 +30,16 @@ export async function getCurrentWeather(lat: number, lon: number) {
     return data;
 }
 
+export async function searchCities(city: string) {
+    const response = await fetch(
+        `${GEO_URL}/direct?q=${encodeURIComponent(city)}&limit=3&appid=${API_KEY}`
+    );
+
+    if (!response.ok) throw new Error("Error buscando ciudades");
+
+    return await response.json();
+}
+
 export async function getWeatherByCity(city: string) {
     const coords = await getCityCoordinates(city)
 

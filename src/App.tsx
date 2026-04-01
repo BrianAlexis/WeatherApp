@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { getWeatherByCity } from "./services/weatherService";
+import { getCurrentWeather } from "./services/weatherService";
 
 import type { WeatherData } from "./types/weatherData";
 
@@ -20,30 +20,28 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setWeather(null)
-    setError(false)
-    setLoading(true)
-
-    if (!city.trim()) {
-      setLoading(false)
-      return
-    }
+  const handleSelectCity = async (lat: number, lon: number, name: string) => {
+    setLoading(true);
+    setError(false);
 
     try {
-      const data = await getWeatherByCity(city)
-      setWeather(data)
+      const data = await getCurrentWeather(lat, lon);
+
+      setWeather({
+        cityName: name,
+        country: data.timezone,
+        lat,
+        lon,
+        ...data
+      });
 
     } catch (error) {
-      setError(true)
+      setError(true);
       console.log({ error })
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-
-    setCity("")
-  }
+  };
 
   return (
     <div className="min-h-screen bg-linear-to-br transition-all duration-1000 flex flex-col items-center justify-center p-6 bg-slate-800 relative">
@@ -53,8 +51,9 @@ function App() {
         {/* Form */}
         <SearchBar
           city={city}
-          handleSubmit={handleSubmit}
-          setCity={setCity} />
+          setCity={setCity}
+          onSelectCity={handleSelectCity}
+        />
 
 
         <div className="flex flex-col items-center">
