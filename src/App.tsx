@@ -1,6 +1,7 @@
 
 import { useState } from "react";
 import { getCurrentWeather } from "./services/weatherService";
+import { WeatherBackground } from "./components/WeatherBackground";
 
 import type { WeatherData } from "./types/weatherData";
 
@@ -11,6 +12,7 @@ import WeatherDaily from "./components/WeatherDaily";
 import WeatherForecast from "./components/WeatherForecast";
 import ErrorMessage from "./components/ErrorMessage";
 import Loader from "./components/Loader";
+
 
 function App() {
 
@@ -45,7 +47,9 @@ function App() {
 
   return (
     <div className="min-h-screen bg-linear-to-br transition-all duration-1000 flex flex-col items-center justify-center p-6 bg-slate-800 relative">
-      <div className="absolute inset-0 opacity-30"></div>
+      <div className="absolute inset-0 opacity-30">
+        <WeatherBackground weather={weather} />
+      </div>
       <div className="relative z-10 w-full max-w-4xl flex flex-col items-center">
 
         {/* Form */}
@@ -54,7 +58,6 @@ function App() {
           setCity={setCity}
           onSelectCity={handleSelectCity}
         />
-
 
         <div className="flex flex-col items-center">
           {loading && <Loader />}

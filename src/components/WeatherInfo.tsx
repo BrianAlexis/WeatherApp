@@ -6,11 +6,15 @@ interface Props {
 
 const WeatherInfo = ({ weather }: Props) => {
 
+    const formattedTimezone = weather.timezone
+        ?.replaceAll("/", " / ")
+        .replaceAll("_", " ");
+
     return (
-        <div>
+        <div className="flex flex-col items-center justify-center font-sans">
             <div className="text-center">
                 <h2 className="text-2xl font-bold text-white">
-                    {weather.cityName}, {weather.country}
+                    {weather.cityName}, {formattedTimezone}
                 </h2>
             </div>
 
@@ -18,15 +22,22 @@ const WeatherInfo = ({ weather }: Props) => {
                 <div className="text-7xl font-bold text-white">
                     {Math.floor(weather.current.temp)}°
                 </div>
-                <p className="text-white/80 text-lg capitalize">
-                    {weather.current.weather[0].main}
-                </p>
-                <div className="flex place-self-center text-white gap-4">
+                <div>
+                    <p className="text-white/80 text-lg capitalize">
+                        {weather.current.weather[0].main}
+                    </p>
+                </div>
+
+                <div className="flex text-white gap-4">
                     <div>
-                        F:{Math.floor(weather.current.feels_like)}°
+                        <p className="text-white/80 text-lg capitalize">
+                            <span className="font-secondary text-sm">F:</span> {Math.floor(weather.current.feels_like)}°
+                        </p>
                     </div>
                     <div>
-                        H: {weather.current.humidity}%
+                        <p className="text-white/80 text-lg capitalize">
+                            <span className="font-secondary text-sm">H:</span> {weather.current.humidity}%
+                        </p>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Search } from "lucide-react";
 import { searchCities } from "../services/weatherService";
 
@@ -8,22 +8,37 @@ interface Props {
     onSelectCity: (lat: number, lon: number, name: string) => void;
 }
 
+interface City {
+    name: string;
+    lat: number;
+    lon: number;
+    country: string;
+    state?: string;
+}
+
 const SearchBar = ({ city, setCity, onSelectCity }: Props) => {
 
-    const [suggestions, setSuggestions] = useState<any[]>([]);
+    const [suggestions, setSuggestions] = useState<City[]>([]);
     const [showDropdown, setShowDropdown] = useState(false);
+    const isSelectingRef = useRef(false);
 
     useEffect(() => {
+        if (isSelectingRef.current) {
+            isSelectingRef.current = false;
+            return;
+        }
+
         const delayDebounce = setTimeout(async () => {
             if (city.length < 2) {
                 setSuggestions([]);
+                setShowDropdown(false);
                 return;
             }
 
             try {
                 const results = await searchCities(city);
                 setSuggestions(results);
-                setShowDropdown(true);
+                setShowDropdown(results.length > 0);
             } catch (error) {
                 console.log(error);
             }
@@ -33,14 +48,14 @@ const SearchBar = ({ city, setCity, onSelectCity }: Props) => {
     }, [city]);
 
     return (
-        <div className="w-full max-w-md relative">
+        <div className="w-full max-w-md relative mb-8">
 
             <div className="relative group">
                 <input
                     type="text"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    placeholder="Buscar ciudad..."
+                    placeholder="Search a city..."
                     className="w-full px-6 py-4 pr-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-white placeholder-white/60 focus:outline-none"
                 />
 
@@ -53,6 +68,7 @@ const SearchBar = ({ city, setCity, onSelectCity }: Props) => {
                         <div
                             key={index}
                             onClick={() => {
+                                isSelectingRef.current = true;
                                 setCity(item.name);
                                 setShowDropdown(false);
                                 onSelectCity(item.lat, item.lon, item.name);
