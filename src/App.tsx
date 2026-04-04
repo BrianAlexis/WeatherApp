@@ -12,6 +12,7 @@ import WeatherDaily from "./components/WeatherDaily";
 import WeatherForecast from "./components/WeatherForecast";
 import ErrorMessage from "./components/ErrorMessage";
 import Loader from "./components/Loader";
+import Footer from "./components/Footer";
 
 
 function App() {
@@ -91,6 +92,8 @@ function App() {
             </div>
           </>
         )}
+
+        <Footer />
       </div>
     </div >
   );

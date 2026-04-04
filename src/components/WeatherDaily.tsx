@@ -10,7 +10,7 @@ const WeatherDaily = ({ weather }: Props) => {
     const next24Hours = weather?.hourly.slice(0, 9)
 
     return (
-        <div className="bg-linear-to-br from-blue-700/70 to-blue-300/70 backdrop-blur-xl rounded-3xl p-4 border border-white/20 shadow-2xl my-6 overflow-x-hidden w-full animate-fade-weather">
+        <div className="bg-linear-to-br from-blue-700/70 to-blue-300/70 backdrop-blur-xl rounded-3xl p-4 border border-white/20 shadow-2xl mt-6 mb-3 overflow-x-hidden w-full animate-fade-weather">
             <p className="text-white ml-5 pb-4 border-b border-white/10 font-secondary text-sm">{weather.daily[0].summary}</p>
             <div className="flex gap-4 overflow-x-auto mt-">
                 {next24Hours?.map((hour) => (
