@@ -7,11 +7,11 @@ export async function getCityCoordinates(city: string) {
         `${GEO_URL}/direct?q=${encodeURIComponent(city)}&limit=1&appid=${API_KEY}`
     );
 
-    if (!response.ok) throw new Error('Error, ciudad no encontrada');
+    if (!response.ok) throw new Error('Error, city not found');
 
     const data = await response.json();
 
-    if (!data || data.length === 0) throw new Error('No escribiste nada');
+    if (!data || data.length === 0) throw new Error('You need to write something');
 
     return data[0];
 }
@@ -21,7 +21,7 @@ export async function getCurrentWeather(lat: number, lon: number) {
         `${WEATHER_URL}/onecall?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=en`
     );
 
-    if (!response.ok) throw new Error('Error de respuesta');
+    if (!response.ok) throw new Error('Response error');
 
     const data = await response.json();
     return data;
@@ -32,7 +32,7 @@ export async function searchCities(city: string) {
         `${GEO_URL}/direct?q=${encodeURIComponent(city)}&limit=3&appid=${API_KEY}`
     );
 
-    if (!response.ok) throw new Error("Error buscando ciudades");
+    if (!response.ok) throw new Error("Error searching cities");
 
     return await response.json();
 }
