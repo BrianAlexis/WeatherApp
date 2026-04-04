@@ -24,9 +24,6 @@ export async function getCurrentWeather(lat: number, lon: number) {
     if (!response.ok) throw new Error('Error de respuesta');
 
     const data = await response.json();
-
-    console.log({ data })
-
     return data;
 }
 
@@ -44,8 +41,6 @@ export async function getWeatherByCity(city: string) {
     const coords = await getCityCoordinates(city)
 
     const weather = await getCurrentWeather(coords.lat, coords.lon)
-
-    console.log({ coords })
 
     return {
         cityName: coords.name,

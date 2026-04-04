@@ -8,11 +8,11 @@ export const Map = ({ lat, lon }: { lat: number; lon: number }) => {
     const position: [number, number] = [lat, lon];
 
     return (
-        <div className="bg-linear-to-br from-blue-500/30 to-white/10 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/20 shadow-2xl mt-4 overflow-x-hidden">
+        <div className="bg-linear-to-br from-blue-700/70 to-blue-300/70 backdrop-blur-xl rounded-3xl p-6 md:p-8 border border-white/20 shadow-2xl mt-4 overflow-x-hidden animate-fade-weather">
             <p className="flex gap-2 text-white mb-4 border-b border-white/10 pb-6 font-secondary"><Sun className="text-white" /> Temperature condition</p>
             <MapContainer
                 center={position}
-                zoom={8}
+                zoom={9}
                 className="w-full h-135 rounded-2xl overflow-hidden"
                 key={`${lat}-${lon}`}>
 

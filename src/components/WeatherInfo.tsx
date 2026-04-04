@@ -11,7 +11,7 @@ const WeatherInfo = ({ weather }: Props) => {
         .replaceAll("_", " ");
 
     return (
-        <div className="flex flex-col items-center justify-center font-sans">
+        <div className="flex flex-col items-center justify-center font-sans animate-fade-weather">
             <div className="text-center">
                 <h2 className="text-2xl font-bold text-white">
                     {weather.cityName}, {formattedTimezone}

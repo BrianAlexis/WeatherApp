@@ -1,30 +1,59 @@
-import React from "react";
+import React, { useLayoutEffect, useRef } from "react";
 import type { WeatherData } from "../types/weatherData";
 
 export const WeatherBackground = React.memo(({ weather }: { weather: WeatherData | null }) => {
-    if (!weather) return <div className="" />
+    const audioRef = useRef<HTMLAudioElement>(null);
 
-    const mainWeather = weather.current.weather[0].main.toLocaleLowerCase();
+    const mainWeather = weather?.current.weather[0].main.toLowerCase();
 
-    const getVideoSrc = () => {
-        if (mainWeather.includes("rain") || mainWeather.includes("drizzle")) return "/videos/lloviendo.webm";
-        if (mainWeather.includes("snow")) return "/videos/nevando.webm";
-        if (mainWeather.includes("clear")) return "/videos/soleado.mp4";
-        if (mainWeather.includes("cloud")) return "/videos/nublado.mp4";
+    const getAssets = () => {
+        if (["rain", "drizzle", "thunderstorm"].some(c => mainWeather?.includes(c))) {
+            return { video: "/videos/rain.mp4", audio: "/sounds/rain_sound.mp3" };
+        }
+        if (mainWeather?.includes("snow")) {
+            return { video: "/videos/snow.mp4", audio: "/sounds/snow_sound.mp3" };
+        }
+        if (mainWeather?.includes("clear")) {
+            return { video: "/videos/clear.mp4", audio: "/sounds/clear_sound.mp3" };
+        }
+        if (mainWeather?.includes("clouds")) {
+            return { video: "/videos/clouds.mp4", audio: "/sounds/clouds_sound.mp3" };
+        }
+        return { video: "/videos/default.mp4", audio: null };
     };
 
-    const videoSrc = getVideoSrc();
+    const { video, audio } = getAssets();
+
+    useLayoutEffect(() => {
+        if (audioRef.current) {
+            audioRef.current.volume = 0.05;
+        }
+    }, [audio]);
 
     return (
-        <video
-            key={videoSrc}
-            autoPlay
-            muted
-            loop
-            playsInline
-            className="absolute top-0 left-0 w-full h-full object-cover z-0 transition-opacity duration-1000"
-        >
-            <source src={videoSrc} type="video/webm" />
-        </video>
+        <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+            <video
+                key={video}
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="absolute top-0 left-0 w-full h-full object-cover z-0"
+            >
+                <source src={video} type={video.endsWith('.webm') ? "video/webm" : "video/mp4"} />
+            </video>
+
+            <div className="absolute inset-0 bg-black/20 backdrop-blur-[1px] z-1" />
+
+            {audio && (
+                <audio
+                    key={audio}
+                    ref={audioRef}
+                    src={audio}
+                    autoPlay
+                    loop
+                />
+            )}
+        </div>
     );
 });

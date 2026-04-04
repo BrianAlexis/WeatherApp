@@ -46,13 +46,23 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-linear-to-br transition-all duration-1000 flex flex-col items-center justify-center p-6 bg-slate-800 relative">
-      <div className="absolute inset-0 opacity-30">
+    <div className="min-h-screen w-full flex flex-col items-center justify-center p-6 relative bg-animated-gradient">
+      <div className="absolute inset-0 opacity-80">
         <WeatherBackground weather={weather} />
       </div>
-      <div className="relative z-10 w-full max-w-4xl flex flex-col items-center">
+      <div className="relative z-10 w-full max-w-4xl flex flex-col items-center animate-fade-in">
 
-        {/* Form */}
+        {!weather && !loading && !error && (
+          <div className="text-center mb-8">
+            <h1 className="text-6xl font-secondary text-white font-bold tracking-tighter">
+              Weather App
+            </h1>
+            <p className="text-white/50 font-secondary mt-2">
+              Enter a city to get the current forecast
+            </p>
+          </div>
+        )}
+
         <SearchBar
           city={city}
           setCity={setCity}
