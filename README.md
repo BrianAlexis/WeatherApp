@@ -1,75 +1,105 @@
-# React + TypeScript + Vite
+# Weather App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React weather dashboard that fetches live data from OpenWeatherMap. It combines search with suggestions, detailed forecasts, an interactive map, and an immersive background that reacts to the current conditions.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Search and discovery
 
-## React Compiler
+- **City search with live suggestions** — As you type (after 2+ characters), the app queries the OpenWeatherMap Geocoding API and shows up to three matching cities (name, optional state, country).
+- **Keyboard-friendly** — Navigate suggestions with arrow keys, confirm with Enter, or dismiss with Escape. Mouse selection is supported as well.
+- **Light feedback sounds** — Optional typing and success sounds when interacting with the search bar (`useSound` hook).
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+### Current conditions
 
-Note: This will impact Vite dev & build performances.
+- **Hero summary** — City name, timezone label, current temperature, condition label, “feels like” temperature, and humidity.
 
-## Expanding the ESLint configuration
+### Forecasts
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Today’s narrative** — Uses OpenWeather’s daily summary for the first day.
+- **Hourly strip** — Next several hours with time, custom weather icons, and temperature in a horizontally scrollable card.
+- **10-day outlook** — Each day shows weekday (or “Today”), min/max temperatures, and condition icons.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Map
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- **Leaflet map** centered on the selected location with:
+  - OpenStreetMap base tiles
+  - OpenWeatherMap **temperature overlay** (`temp_new`) for spatial context
+  - A marker at the searched coordinates
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Atmosphere
+
+- **Dynamic full-screen background** — Looped video switches by condition (rain, snow, clear, clouds, default). Ambient audio loops at low volume when a matching sound exists (rain, snow, clear, clouds).
+
+### UX
+
+- **Loading state** — Spinner while weather data is fetched.
+- **Error handling** — Friendly message when a city cannot be resolved or the request fails.
+- **Animations** — Fade-in for the main layout and weather panels.
+
+## Tech stack
+
+| Area | Choice |
+|------|--------|
+| UI | React 19 (RC), TypeScript |
+| Build | Vite 8 |
+| Styling | Tailwind CSS 4 (`@tailwindcss/vite`) |
+| Map | Leaflet, react-leaflet |
+| Icons | lucide-react |
+| Compiler | React Compiler (Babel plugin) |
+| Lint | ESLint 9 + typescript-eslint |
+
+## API and environment
+
+Data comes from **OpenWeatherMap**:
+
+- **Geocoding API** — Resolve city names to coordinates and power search suggestions.
+- **One Call API 3.0** — `onecall` endpoint for current, hourly, daily, minutely, alerts, etc. (metric units, English descriptions).
+
+Create a `.env` file in the project root:
+
+```env
+VITE_WEATHER_API_KEY=your_openweathermap_api_key
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+The same key is used for the weather JSON API and the temperature map tiles. Ensure your OpenWeather account has access to **One Call API 3.0** if you use that endpoint.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Project structure
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+src/
+├── App.tsx                 # Layout, state, orchestration
+├── main.tsx
+├── components/
+│   ├── SearchBar.tsx       # Debounced search + dropdown + keyboard
+│   ├── WeatherInfo.tsx     # Current conditions header
+│   ├── WeatherDaily.tsx    # Summary + hourly strip
+│   ├── WeatherForecast.tsx # 10-day list
+│   ├── Map.tsx             # Leaflet + OSM + temp layer
+│   ├── WeatherBackground.tsx
+│   ├── WeatherIcon.tsx     # Condition → lucide icons
+│   ├── Loader.tsx
+│   ├── ErrorMessage.tsx
+│   └── Footer.tsx
+├── hooks/
+│   └── useSound.tsx        # Short UI sounds
+├── services/
+│   └── weatherService.ts   # Geocoding, search, one-call fetch
+└── types/
+    └── weatherData.ts      # OpenWeather response shapes
+```
+
+Static assets referenced in code (e.g. `/videos/*.mp4`, `/sounds/*.mp3`) should live under `public/` so Vite serves them at the root URL.
+
+## Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run dev` | Start dev server with HMR |
+| `npm run build` | Typecheck and production build |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run ESLint |
+
+## Author
+
+Footer credits: **Brian** — [LinkedIn](https://www.linkedin.com/in/brian-alexis-acu%C3%B1a/).
