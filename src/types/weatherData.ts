@@ -45,17 +45,28 @@ export interface Rain {
     "1h": number;
 }
 
+export type WeatherMain =
+    | "Clear"
+    | "Clouds"
+    | "Rain"
+    | "Drizzle"
+    | "Thunderstorm"
+    | "Snow"
+    | "Mist"
+    | "Smoke"
+    | "Haze"
+    | "Dust"
+    | "Fog"
+    | "Sand"
+    | "Ash"
+    | "Squall"
+    | "Tornado";
+
 export interface Weather {
     id: number;
-    main: Main;
+    main: WeatherMain | (string & {});
     description: string;
     icon: string;
-}
-
-export enum Main {
-    Clear = "Clear",
-    Clouds = "Clouds",
-    Rain = "Rain",
 }
 
 export interface Daily {
