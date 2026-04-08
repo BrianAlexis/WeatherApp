@@ -9,5 +9,6 @@ export const useSound = (url: string) => {
         audio.currentTime = 0;
         audio.play().catch(() => { });
         audio.volume = 0.1;
+        audio.preload = "auto"
     };
 };

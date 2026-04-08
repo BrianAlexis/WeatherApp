@@ -39,6 +39,7 @@ export const WeatherBackground = React.memo(({ weather }: { weather: WeatherData
                 loop
                 playsInline
                 className="absolute top-0 left-0 w-full h-full object-cover z-0"
+                preload="auto"
             >
                 <source src={video} type={video.endsWith('.webm') ? "video/webm" : "video/mp4"} />
             </video>
