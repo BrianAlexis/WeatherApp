@@ -4,14 +4,12 @@ import { Sun } from "lucide-react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 
 import L from "leaflet";
-import markerIcon from "leaflet/dist/images/marker-icon.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
 
-const defaultIcon = L.icon({
-    iconUrl: markerIcon,
-    shadowUrl: markerShadow,
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
+delete (L.Icon.Default.prototype as unknown as { _getIconUrl?: string })._getIconUrl;
+
+L.Icon.Default.mergeOptions({
+    iconUrl: "/marker-icon.png",
+    shadowUrl: "/marker-shadow.png",
 });
 
 export const Map = ({ lat, lon }: { lat: number; lon: number }) => {
@@ -36,7 +34,7 @@ export const Map = ({ lat, lon }: { lat: number; lon: number }) => {
                     }
                 />
 
-                <Marker position={[lat, lon]} icon={defaultIcon}>
+                <Marker position={[lat, lon]}>
                 </Marker>
             </MapContainer>
         </div >
