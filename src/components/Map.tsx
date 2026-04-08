@@ -3,6 +3,17 @@ const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 import { Sun } from "lucide-react";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 
+import L from "leaflet";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+
+const defaultIcon = L.icon({
+    iconUrl: markerIcon,
+    shadowUrl: markerShadow,
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+});
+
 export const Map = ({ lat, lon }: { lat: number; lon: number }) => {
 
     const position: [number, number] = [lat, lon];
@@ -25,9 +36,9 @@ export const Map = ({ lat, lon }: { lat: number; lon: number }) => {
                     }
                 />
 
-                <Marker position={[lat, lon]}>
+                <Marker position={[lat, lon]} icon={defaultIcon}>
                 </Marker>
             </MapContainer>
-        </ div >
+        </div >
     );
 };
