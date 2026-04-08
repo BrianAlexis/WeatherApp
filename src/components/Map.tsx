@@ -1,7 +1,7 @@
 const API_KEY = import.meta.env.VITE_WEATHER_API_KEY;
 
 import { Sun } from "lucide-react";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
 
 export const Map = ({ lat, lon }: { lat: number; lon: number }) => {
 
@@ -26,7 +26,6 @@ export const Map = ({ lat, lon }: { lat: number; lon: number }) => {
                 />
 
                 <Marker position={[lat, lon]}>
-                    <Popup>Ubicación buscada</Popup>
                 </Marker>
             </MapContainer>
         </ div >
