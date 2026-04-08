@@ -19,7 +19,7 @@ export const WeatherBackground = React.memo(({ weather }: { weather: WeatherData
         if (mainWeather?.includes("clouds")) {
             return { video: "/videos/clouds.mp4", audio: "/sounds/clouds_sound.mp3" };
         }
-        return { video: "/videos/default.mp4", audio: null };
+        return { video: "/videos/clear.mp4", audio: "/sounds/clear_sound.mp3" };
     };
 
     const { video, audio } = getAssets();

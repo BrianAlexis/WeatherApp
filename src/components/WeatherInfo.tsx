@@ -11,7 +11,7 @@ const WeatherInfo = ({ weather }: Props) => {
         .replaceAll("_", " ");
 
     return (
-        <div className="flex flex-col items-center justify-center font-sans animate-fade-weather">
+        <div className="flex flex-col items-center justify-center font-sans animate-fade-weather gap-4">
             <div className="text-center">
                 <h2 className="text-2xl font-bold text-white">
                     {weather.cityName}, {formattedTimezone}
@@ -20,7 +20,7 @@ const WeatherInfo = ({ weather }: Props) => {
 
             <div className="text-center">
                 <div className="text-7xl font-bold text-white">
-                    {Math.floor(weather.current.temp)}°
+                    {Math.floor(weather.current.temp)}<sup>°c</sup>
                 </div>
                 <div>
                     <p className="text-white/80 text-lg capitalize">

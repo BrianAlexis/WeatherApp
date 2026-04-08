@@ -34,10 +34,10 @@ const WeatherForecast = ({ weather }: Props) => {
 
                         <div className="flex justify-end gap-4 text-sm">
                             <span className="text-white/60 w-8 text-right">
-                                {Math.floor(day.temp.min)}°
+                                {Math.floor(day.temp.min)}<sup>°c</sup>
                             </span>
                             <span className="text-white font-semibold w-8 text-right">
-                                {Math.floor(day.temp.max)}°
+                                {Math.floor(day.temp.max)}<sup>°c</sup>
                             </span>
                         </div>
                     </div>

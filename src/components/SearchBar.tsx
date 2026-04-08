@@ -56,7 +56,7 @@ const SearchBar = ({ city, setCity, onSelectCity }: Props) => {
     }, [city, searchCitySound]);
 
     return (
-        <div className="w-full max-w-md relative mb-8">
+        <div className="w-full max-w-md relative mb-4">
             <div className="relative group">
                 <input
                     type="text"

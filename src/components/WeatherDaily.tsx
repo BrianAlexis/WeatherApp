@@ -27,7 +27,7 @@ const WeatherDaily = ({ weather }: Props) => {
                         </div>
 
                         <p className="text-sm font-bold">
-                            {Math.round(hour.temp)}°
+                            {Math.round(hour.temp)}<sup>°c</sup>
                         </p>
                     </div>
                 ))}
