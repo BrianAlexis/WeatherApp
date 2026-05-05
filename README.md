@@ -4,6 +4,9 @@ A React weather dashboard that fetches live data from OpenWeatherMap. It combine
 
 <img width="818" height="654" alt="WeatherApp" src="https://github.com/user-attachments/assets/b1632076-3f4f-4ec0-9bae-7ccff8aef6d8" />
 
+
+**Live demo:** [WeatherApp](https://weather-app-react-three-murex.vercel.app/)
+
 ## Features
 
 ### Search and discovery
