@@ -2,6 +2,8 @@
 
 A React weather dashboard that fetches live data from OpenWeatherMap. It combines search with suggestions, detailed forecasts, an interactive map, and an immersive background that reacts to the current conditions.
 
+<img width="818" height="654" alt="WeatherApp" src="https://github.com/user-attachments/assets/b1632076-3f4f-4ec0-9bae-7ccff8aef6d8" />
+
 ## Features
 
 ### Search and discovery
